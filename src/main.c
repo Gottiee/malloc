@@ -13,4 +13,5 @@ int main(void)
     test[0] = 1;
     test[2] = 3;
     printf("test[0] = %d\ntest[2] = %d\n", test[0], test[2]);
+    printf("sizeof(t_block) = %ld\n", sizeof(t_block));
 }
