@@ -5,11 +5,9 @@ int alignData(int size)
     int result;
 
     if (size % 8 == 0)
-        // printf("size is a modulo of 8\n");
-        result = size;
+        printf("size is a modulo of 8\n");
     else
         result = ((size - 1) / 8) * 8 + 8;
-        // printf("size %d, isnt a modulo of 8 : so the nearest is : %d\n", size, result);
     return result;
 }
 
@@ -56,7 +54,7 @@ t_block *extendHeap(t_block *last, size_t size)
     return b;
 }
 
-void *malloc(size_t size)
+void *ft_malloc(size_t size)
 {
     t_block *b;
     t_block *last = NULL;
@@ -64,7 +62,7 @@ void *malloc(size_t size)
     if (size < 1)
         return (NULL);
     size = alignData(size);
-    if (!base)
+    if (base == NULL)
     {
         write(1, "Fist time called Malloc\n", 24);
         b = extendHeap(last, size);

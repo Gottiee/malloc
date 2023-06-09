@@ -10,12 +10,13 @@ void *base = NULL;
 
 int main(void)
 {
-    char *test = malloc(sizeof(char) * 4);
+    char *test = ft_malloc(sizeof(char) * 3);
     if (!test)
         return (2);
     test[0] = 'o';
     test[1] = 'k';
-    test[2] = '\n';
-    test[3] = '\0';
-    write(1, test, 3);
+    test[2] = '\0';
+    printf("chaine de caratere: %s\n", test);
+    char *test2 = ft_malloc(sizeof(int) * 10);
+    printStruct();
 }

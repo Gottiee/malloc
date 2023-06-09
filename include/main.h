@@ -32,6 +32,7 @@ typedef struct s_block
 } t_block;
 
 
-void *malloc(size_t size);
+void    *ft_malloc(size_t size);
+void    printStruct(void);
 
 #endif
