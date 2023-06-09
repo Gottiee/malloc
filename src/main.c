@@ -6,12 +6,16 @@
 // ◦ getpagesize(2 or 3 depending on OS)
 // ◦ getrlimit(2)
 //  int getrlimit (int resource, struct rlimit *rlim);
+void *base = NULL;
 
 int main(void)
 {
-    int *test = malloc(sizeof(int) * 3);
-    test[0] = 1;
-    test[2] = 3;
-    printf("test[0] = %d\ntest[2] = %d\n", test[0], test[2]);
-    printf("sizeof(t_block) = %ld\n", sizeof(t_block));
+    char *test = malloc(sizeof(char) * 4);
+    if (!test)
+        return (2);
+    test[0] = 'o';
+    test[1] = 'k';
+    test[2] = '\n';
+    test[3] = '\0';
+    write(1, test, 3);
 }
