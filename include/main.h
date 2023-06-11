@@ -27,12 +27,16 @@ typedef struct s_heap
 typedef struct s_block
 {
     struct s_block  *next;
+    struct s_block  *prev;
     size_t          data_size;
     bool            freed;
 } t_block;
 
 
+t_block * extendHeap(t_block * last, size_t size);
+
 void    *ft_malloc(size_t size);
 void    printStruct(void);
+void    ft_free(void *ptr);
 
 #endif

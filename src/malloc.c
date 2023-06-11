@@ -1,16 +1,18 @@
 #include "../include/main.h"
 
+//align data on 8bytes
 int alignData(int size)
 {
     int result;
 
     if (size % 8 == 0)
-        printf("size is a modulo of 8\n");
+        result = size;
     else
         result = ((size - 1) / 8) * 8 + 8;
     return result;
 }
 
+//A block is free, but data is too short to fill the entire block, we split it
 void splitBlock(t_block *b, size_t size)
 {
     t_block *new;
@@ -23,14 +25,16 @@ void splitBlock(t_block *b, size_t size)
     new->next = tmp.next;
     new->freed = true;
     new->data_size = tmp.data_size - size - BLOCK_SIZE;
+    new->prev = b;
 }
 
-t_block *findBlock(t_block *last, size_t size)
+//looking for a free block
+t_block *findBlock(t_block **last, size_t size)
 {
     t_block *b = base;
     while (b && !(b->freed && b->data_size >= size))
     {
-        *last = *b;
+        *last = b;
         b = b->next;
     }
     if (b && b->data_size > size + BLOCK_SIZE)
@@ -40,6 +44,7 @@ t_block *findBlock(t_block *last, size_t size)
     return b;
 }
 
+//no block free, new mmap
 t_block *extendHeap(t_block *last, size_t size)
 {
     t_block *b;
@@ -50,7 +55,10 @@ t_block *extendHeap(t_block *last, size_t size)
     b->freed = false;
     b->next = NULL;
     if (last)
+    {
         last->next = b;
+        b->prev = last;
+    }
     return b;
 }
 
@@ -64,14 +72,13 @@ void *ft_malloc(size_t size)
     size = alignData(size);
     if (base == NULL)
     {
-        write(1, "Fist time called Malloc\n", 24);
         b = extendHeap(last, size);
+        b->prev = NULL;
         base = b;
     }
     else
     {
-        write(1, "Malloc already initialised\n", 27);
-        b = findBlock(last, size);
+        b = findBlock(&last, size);
         if (!b)
             b = extendHeap(last, size);
     }

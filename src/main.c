@@ -19,4 +19,6 @@ int main(void)
     printf("chaine de caratere: %s\n", test);
     char *test2 = ft_malloc(sizeof(int) * 10);
     printStruct();
+    char *test3 = ft_malloc(sizeof(char) * 10);
+    printStruct();
 }
