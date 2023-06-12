@@ -1,6 +1,6 @@
 #include "../include/main.h"
 
-//align data on 8bytes
+// align data on 8bytes
 int alignData(int size)
 {
     int result;
@@ -12,7 +12,7 @@ int alignData(int size)
     return result;
 }
 
-//A block is free, but data is too short to fill the entire block, we split it
+// A block is free, but data is too short to fill the entire block, we split it
 void splitBlock(t_block *b, size_t size)
 {
     t_block *new;
@@ -28,7 +28,7 @@ void splitBlock(t_block *b, size_t size)
     new->prev = b;
 }
 
-//looking for a free block
+// looking for a free block
 t_block *findBlock(t_block **last, size_t size)
 {
     t_block *b = base;
@@ -40,11 +40,14 @@ t_block *findBlock(t_block **last, size_t size)
     if (b && b->data_size > size + BLOCK_SIZE)
         splitBlock(b, size);
     if (b)
+    {
         b->freed = false;
+        b->data_size = size;
+    }
     return b;
 }
 
-//no block free, new mmap
+// no block free, new mmap
 t_block *extendHeap(t_block *last, size_t size)
 {
     t_block *b;

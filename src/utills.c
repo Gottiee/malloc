@@ -25,9 +25,12 @@ void printStruct()
     char status[4];
 
     tmp = base;
+    printf("\n---Print Struct---\n");
     if (!base)
+    {
+        printf("Heap unallocated\n");
         return;
-    printf("\n---Print Struct---\n\n");
+    }
     while (tmp)
     {
         fill(tmp->freed, status);
@@ -43,7 +46,7 @@ void printStruct()
         {
             for (int i = 0; i < tmp->data_size / 2; i++)
             {
-                printf("-");
+                printf("#");
             }
         }
         tmp = tmp->next;
