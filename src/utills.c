@@ -25,7 +25,7 @@ void printStruct()
     char status[4];
 
     tmp = base;
-    printf("\n---Print Struct---\n");
+    printf("\nPrint Struct:\n");
     if (!base)
     {
         printf("Heap unallocated\n");

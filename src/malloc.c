@@ -1,5 +1,7 @@
 #include "../include/main.h"
 
+void *base = NULL;
+
 // align data on 8bytes
 int alignData(int size)
 {
@@ -47,6 +49,15 @@ t_block *findBlock(t_block **last, size_t size)
     return b;
 }
 
+static rlim_t get_system_limit(void)
+{
+    struct rlimit rpl;
+
+    if (getrlimit(RLIMIT_DATA, &rpl) < 0)
+        return (-1);
+    return (rpl.rlim_max);
+}
+
 // no block free, new mmap
 t_block *extendHeap(t_block *last, size_t size)
 {
@@ -67,23 +78,37 @@ t_block *extendHeap(t_block *last, size_t size)
 
 void *ft_malloc(size_t size)
 {
-    t_block *b;
-    t_block *last = NULL;
+    // t_block *b;
+    // t_block *last = NULL;
+
+    // if (size < 1)
+    //     return (NULL);
+    // size = alignData(size);
+    // if (size > get_system_limit())
+    //     return NULL;
+    // if (base == NULL)
+    // {
+    //     b = extendHeap(last, size);
+    //     b->prev = NULL;
+    //     base = b;
+    // }
+    // else
+    // {
+    //     b = findBlock(&last, size);
+    //     if (!b)
+    //         b = extendHeap(last, size);
+    // }
+    // return BLOCK_SHIFT(b);
+
+    t_group_heap    *g;
+    int             blockType;
 
     if (size < 1)
         return (NULL);
-    size = alignData(size);
-    if (base == NULL)
+    blockType = determineType(size);
+    if (!base) 
     {
-        b = extendHeap(last, size);
-        b->prev = NULL;
-        base = b;
+        
     }
-    else
-    {
-        b = findBlock(&last, size);
-        if (!b)
-            b = extendHeap(last, size);
-    }
-    return BLOCK_SHIFT(b);
+    
 }

@@ -40,7 +40,7 @@ bool verifyAddress(t_block *b)
     t_block *tmp = base;
     while (tmp)
     {
-        if (tmp = b)
+        if (tmp == b)
             return true;
         tmp = tmp->next;
     }
