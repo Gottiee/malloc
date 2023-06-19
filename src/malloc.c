@@ -59,7 +59,7 @@ static rlim_t get_system_limit(void)
 }
 
 // no block free, new mmap
-t_block *extendHeap(t_block *last, size_t size)
+t_block *extendHeapBlock(t_block *last, size_t size)
 {
     t_block *b;
     b = mmap(NULL, sizeof(t_block) + size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -100,15 +100,22 @@ void *ft_malloc(size_t size)
     // }
     // return BLOCK_SHIFT(b);
 
+    t_heap          *h;
+    t_heap          *last = NULL;
     t_group_heap    *g;
     int             blockType;
 
     if (size < 1)
         return (NULL);
+    size = alignData(size);
     blockType = determineType(size);
+    if (getZone(blockType, size) + HEAP_SIZE + GROUP_SIZE > get_system_limit())
+        return NULL;
     if (!base) 
     {
-        
+       h = extendHeap(blockType, size, last);
+
     }
+    return BLOCK_SHIFT(h);
     
 }

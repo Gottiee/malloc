@@ -12,6 +12,8 @@
 #define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
 #define NULL ((void *)0)
 #define BLOCK_SIZE sizeof (struct s_block)
+#define GROUP_SIZE sizeof (struct s_group_heap)
+#define HEAP_SIZE sizeof (struct s_heap)
 
 // a BLOCK of the tinyest malloc malloc(1) = 32 (t_block) + 1;
 // TINY can contain 124 BLOCKS of 100 bits
@@ -22,13 +24,14 @@
 #define SMALL 1
 #define LARGE 2
 
-extern void *base;
+extern  t_group_heap *base;
 
 typedef struct s_heap
 {
     struct s_heap   *prev;
     struct s_heap   *next;
     size_t          free_size;
+    size_t          malloc_size;
     int             type;
     
 } t_heap;
@@ -43,16 +46,16 @@ typedef struct s_block
 
 typedef struct s_group_heap
 {
-    t_heap *tiny;
-    t_heap *small;
-    t_heap *large;
+    t_heap *zone[3];
 } t_group_heap;
 
-t_block * extendHeap(t_block * last, size_t size);
 
-void    *ft_malloc(size_t size);
-void    printStruct(void);
-void    ft_free(void *ptr);
-int     determineType(size_t size);
+t_heap          *extendHeap(int blockType, size_t size, t_heap *last);
+void            *ft_malloc(size_t size);
+void            printStruct(void);
+void            ft_free(void *ptr);
+int             determineType(size_t size);
+size_t          getZone(int type, size_t size);
+t_block         *getBlock(void *ptr);
 
 #endif

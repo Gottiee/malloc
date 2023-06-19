@@ -12,8 +12,6 @@ void test(void)
     printf("------Malloc TEST------\n");
     printf("\n------Simple Malloc------\n");
     char *test = ft_malloc(sizeof(char) * 3);
-    if (!test)
-        return (2);
     test[0] = 'o';
     test[1] = 'k';
     test[2] = '\0';
