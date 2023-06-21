@@ -82,9 +82,12 @@ int main(void)
     // test();
     char *test;
     test = ft_malloc(sizeof(char) * 5000);
-    test[0] = 'o';
-    test[1] = 'k';
-    test[2] = '\n';
-    test[3] = '\0';
+    int i = -1;
+    // while (++i < 4999)
+    //     test[i] = 'a';
+    while (++i < 5020)
+        test[i] = 'a';
+    test[i] = '\0';
     printf("test = %s\n", test);
+    ft_malloc(7);
 }

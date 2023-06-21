@@ -50,14 +50,23 @@ typedef struct s_group_heap
     t_heap *zone[3];
 } t_group_heap;
 
-t_heap *extendHeap(int blockType, size_t size, t_heap *last);
+/*--- malloc.c ---*/
 void *ft_malloc(size_t size);
+
+/*--- utils.c ---*/
 void printStruct(void);
+
+/*--- free.c ---*/
 void ft_free(void *ptr);
-int determineType(size_t size);
-size_t getZone(int type, size_t size);
 t_block *getBlock(void *ptr);
 
+/*--- zones.c ---*/
+int determineType(size_t size);
+size_t getZone(int type, size_t size);
+t_heap *findZone(t_heap **last, size_t size, int type);
+t_heap *extendHeap(int blockType, size_t size, t_heap *last);
+
+/*--- block.c ---*/
 t_block *extendHeapBlock(size_t size, t_heap *h);
 
 #endif

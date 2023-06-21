@@ -30,24 +30,7 @@ void splitBlock(t_block *b, size_t size)
     new->prev = b;
 }
 
-// looking for a free block
-t_block *findBlock(t_block **last, size_t size)
-{
-    // t_block *b = base;
-    // while (b && !(b->freed && b->data_size >= size))
-    // {
-    //     *last = b;
-    //     b = b->next;
-    // }
-    // if (b && b->data_size > size + BLOCK_SIZE)
-    //     splitBlock(b, size);
-    // if (b)
-    // {
-    //     b->freed = false;
-    //     b->data_size = size;
-    // }
-    // return b;
-}
+
 
 static rlim_t get_system_limit(void)
 {
@@ -84,8 +67,8 @@ void *ft_malloc(size_t size)
 
     t_heap          *h;
     t_block         *b = NULL;
+    t_block         *lastBlock = NULL;
     t_heap          *last = NULL;
-    t_group_heap    *g;
     int             blockType;
 
     if (size < 1)
@@ -98,6 +81,17 @@ void *ft_malloc(size_t size)
     {
        h = extendHeap(blockType, size, last);
        b = extendHeapBlock(size, h);
+    }
+    else
+    {
+        h = findZone(&last, size, blockType);
+        if (!h)
+        {
+            h = extendHeap(blockType, size, last);
+            b = extendHeapBlock(size, h);
+        }
+        // else
+        //     b = findBlock(&lastBlock, size);
     }
     return BLOCK_SHIFT(b);
     

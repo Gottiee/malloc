@@ -13,7 +13,7 @@ size_t getZone(int type, size_t size)
         return TINY_HEAP_ALLOCATION_SIZE;
     if (type == SMALL)
         return SMALL_HEAP_ALLOCATION_SIZE;
-    return size;
+    return size + BLOCK_SIZE;
 }
 
 t_heap *firstMmap(size_t size)
@@ -26,7 +26,7 @@ t_heap *firstMmap(size_t size)
         return NULL;
     initGroup(g);
     base = g;
-    return (t_heap *)(g + HEAP_SIZE);
+    return (t_heap *)(g + GROUP_SIZE);
 }
 
 void initHeapData(t_heap *h, int blockType, size_t size, t_heap *last)
@@ -36,7 +36,7 @@ void initHeapData(t_heap *h, int blockType, size_t size, t_heap *last)
 
     h->next = NULL;
     h->type = blockType;
-    h->size =  zone + HEAP_SIZE;
+    h->size = zone + HEAP_SIZE;
     h->malloc_size = 0;
     h->free_size = zone;
     if (last)
@@ -80,4 +80,16 @@ int determineType(size_t size)
     if (size <= 2000)
         return SMALL;
     return LARGE;
+}
+
+t_heap *findZone(t_heap **last, size_t size, int type)
+{
+    t_heap *h = base->zone[type];
+
+    while (h && !(h->free_size >= size + BLOCK_SIZE))
+    {
+        *last = h;
+        h = h->next;
+    }
+    return h;
 }
