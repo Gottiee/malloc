@@ -21,27 +21,27 @@ char *fill(bool free, char status[4])
 
 void printStruct()
 {
-    t_block *tmp;
-    char status[4];
+    // t_block *tmp;
+    // char status[4];
 
-    tmp = base;
-    printf("\nPrint Struct:\n");
-    if (!base)
-    {
-        printf("Heap unallocated\n");
-        return;
-    }
-    while (tmp)
-    {
-        fill(tmp->freed, status);
-        printf("|size: %ld, free: %s|", tmp->data_size, status);
-        if (tmp->freed)
-            for (int i = 0; i < tmp->data_size / 2; i++)
-                printf(".");
-        else
-            for (int i = 0; i < tmp->data_size / 2; i++)
-                printf("#");
-        tmp = tmp->next;
-    }
-    printf("\n");
+    // tmp = base;
+    // printf("\nPrint Struct:\n");
+    // if (!base)
+    // {
+    //     printf("Heap unallocated\n");
+    //     return;
+    // }
+    // while (tmp)
+    // {
+    //     fill(tmp->freed, status);
+    //     printf("|size: %ld, free: %s|", tmp->data_size, status);
+    //     if (tmp->freed)
+    //         for (int i = 0; i < tmp->data_size / 2; i++)
+    //             printf(".");
+    //     else
+    //         for (int i = 0; i < tmp->data_size / 2; i++)
+    //             printf("#");
+    //     tmp = tmp->next;
+    // }
+    // printf("\n");
 }

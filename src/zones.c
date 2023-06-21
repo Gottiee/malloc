@@ -2,9 +2,9 @@
 
 void initGroup(t_group_heap *g)
 {
-    g->tiny = NULL;
-    g->small = NULL;
-    g->large = NULL;
+    g->zone[0] = NULL;
+    g->zone[1] = NULL;
+    g->zone[2] = NULL;
 }
 
 size_t getZone(int type, size_t size)
@@ -13,13 +13,12 @@ size_t getZone(int type, size_t size)
         return TINY_HEAP_ALLOCATION_SIZE;
     if (type == SMALL)
         return SMALL_HEAP_ALLOCATION_SIZE;
-    return size; 
+    return size;
 }
-
 
 t_heap *firstMmap(size_t size)
 {
-    t_group_heap    *g;
+    t_group_heap *g;
 
     size += GROUP_SIZE;
     g = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -30,12 +29,16 @@ t_heap *firstMmap(size_t size)
     return (t_heap *)(g + HEAP_SIZE);
 }
 
-void   initHeapData(t_heap *h, int blockType, size_t size, t_heap *last)
+void initHeapData(t_heap *h, int blockType, size_t size, t_heap *last)
 {
+    t_block *b = (t_block *)h + HEAP_SIZE;
+    size_t zone = getZone(blockType, size);
+
     h->next = NULL;
     h->type = blockType;
-    h->malloc_size = size + BLOCK_SIZE;
-    h->free_size = getZone(blockType, size) - h->malloc_size;
+    h->size =  zone + HEAP_SIZE;
+    h->malloc_size = 0;
+    h->free_size = zone;
     if (last)
     {
         last->next = h;
@@ -46,13 +49,16 @@ void   initHeapData(t_heap *h, int blockType, size_t size, t_heap *last)
         base->zone[blockType] = h;
         h->prev = NULL;
     }
+    b->next = NULL;
+    b->prev = NULL;
+    b->freed = true;
 }
 
-//mmap a new zone
+// mmap a new zone
 t_heap *extendHeap(int blockType, size_t size, t_heap *last)
 {
-    t_heap          *h;
-    size_t          sizeMmap;
+    t_heap *h;
+    size_t sizeMmap;
 
     sizeMmap = getZone(blockType, size) + HEAP_SIZE;
     if (!base)

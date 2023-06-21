@@ -80,4 +80,11 @@ void test(void)
 int main(void)
 {
     // test();
+    char *test;
+    test = ft_malloc(sizeof(char) * 5000);
+    test[0] = 'o';
+    test[1] = 'k';
+    test[2] = '\n';
+    test[3] = '\0';
+    printf("test = %s\n", test);
 }
