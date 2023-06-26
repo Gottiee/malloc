@@ -77,17 +77,18 @@ void test(void)
     ft_free(test);
 }
 
+void mallocThings(size_t size)
+{
+    char *onsenfou = ft_malloc(size);
+}
+
 int main(void)
 {
     // test();
     char *test;
-    test = ft_malloc(sizeof(char) * 5000);
-    int i = -1;
-    // while (++i < 4999)
-    //     test[i] = 'a';
-    while (++i < 5020)
-        test[i] = 'a';
-    test[i] = '\0';
-    printf("test = %s\n", test);
-    ft_malloc(7);
+    for (int i = 0; i < 203; i++)
+    {
+        mallocThings(2000);
+    }
+    printStruct();
 }

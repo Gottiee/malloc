@@ -14,24 +14,6 @@ int alignData(int size)
     return result;
 }
 
-// A block is free, but data is too short to fill the entire block, we split it
-void splitBlock(t_block *b, size_t size)
-{
-    t_block *new;
-    t_block tmp;
-
-    new = b + size + BLOCK_SIZE;
-    tmp.next = b->next;
-    tmp.data_size = b->data_size;
-    b->next = new;
-    new->next = tmp.next;
-    new->freed = true;
-    new->data_size = tmp.data_size - size - BLOCK_SIZE;
-    new->prev = b;
-}
-
-
-
 static rlim_t get_system_limit(void)
 {
     struct rlimit rpl;
@@ -41,33 +23,16 @@ static rlim_t get_system_limit(void)
     return (rpl.rlim_max);
 }
 
+void doExtendHeap(t_heap **h, int blockType, size_t size, t_heap **last, t_block **b)
+{
+       *h = extendHeap(blockType, size, *last);
+       *b = extendHeapBlockFirst(size, *h);
+}
+
 void *ft_malloc(size_t size)
 {
-    // t_block *b;
-    // t_block *last = NULL;
-
-    // if (size < 1)
-    //     return (NULL);
-    // size = alignData(size);
-    // if (size > get_system_limit())
-    //     return NULL;
-    // if (base == NULL)
-    // {
-    //     b = extendHeap(last, size);
-    //     b->prev = NULL;
-    //     base = b;
-    // }
-    // else
-    // {
-    //     b = findBlock(&last, size);
-    //     if (!b)
-    //         b = extendHeap(last, size);
-    // }
-    // return BLOCK_SHIFT(b);
-
     t_heap          *h;
     t_block         *b = NULL;
-    t_block         *lastBlock = NULL;
     t_heap          *last = NULL;
     int             blockType;
 
@@ -78,20 +43,22 @@ void *ft_malloc(size_t size)
     if (getZone(blockType, size) + HEAP_SIZE + GROUP_SIZE > get_system_limit())
         return NULL;
     if (!base) 
-    {
-       h = extendHeap(blockType, size, last);
-       b = extendHeapBlock(size, h);
-    }
+        doExtendHeap(&h, blockType, size, &last, &b);
     else
     {
         h = findZone(&last, size, blockType);
         if (!h)
+            doExtendHeap(&h, blockType, size, &last, &b);
+        else
         {
-            h = extendHeap(blockType, size, last);
+            b = findBlock(h, size);
+            if (b)
+                return BLOCK_SHIFT(b);
             b = extendHeapBlock(size, h);
+            if (b)
+                return BLOCK_SHIFT(b);
+            doExtendHeap(&h, blockType, size, &last, &b);
         }
-        // else
-        //     b = findBlock(&lastBlock, size);
     }
     return BLOCK_SHIFT(b);
     

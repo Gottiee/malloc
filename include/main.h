@@ -14,6 +14,23 @@
 #define BLOCK_SIZE sizeof(struct s_block)
 #define GROUP_SIZE sizeof(struct s_group_heap)
 #define HEAP_SIZE sizeof(struct s_heap)
+#define NOIR "\033[30m"
+#define ROUGE "\033[31m"
+#define VERT "\033[32m"
+#define JAUNE "\033[33m"
+#define BLEU "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define BLANC "\033[37m"
+#define ARRIERE_PLAN_NOIR "\033[40m"
+#define ARRIERE_PLAN_ROUGE "\033[41m"
+#define ARRIERE_PLAN_VERT "\033[42m"
+#define ARRIERE_PLAN_JAUNE "\033[43m"
+#define ARRIERE_PLAN_BLEU "\033[44m"
+#define ARRIERE_PLAN_MAGENTA "\033[45m"
+#define ARRIERE_PLAN_CYAN "\033[46m"
+#define ARRIERE_PLAN_BLANC "\033[47m"
+#define RESET "\033[0m"
 
 // a BLOCK of the tinyest malloc malloc(1) = 32 (t_block) + 1;
 // TINY can contain 124 BLOCKS of 100 bits
@@ -34,7 +51,6 @@ typedef struct s_heap
     size_t free_size;
     size_t malloc_size;
     int type;
-
 } t_heap;
 
 typedef struct s_block
@@ -65,8 +81,10 @@ int determineType(size_t size);
 size_t getZone(int type, size_t size);
 t_heap *findZone(t_heap **last, size_t size, int type);
 t_heap *extendHeap(int blockType, size_t size, t_heap *last);
+t_block *extendHeapBlockFirst(size_t size, t_heap *h);
 
 /*--- block.c ---*/
 t_block *extendHeapBlock(size_t size, t_heap *h);
+t_block *findBlock(t_heap *h, size_t size);
 
 #endif
