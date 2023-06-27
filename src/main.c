@@ -7,9 +7,9 @@
 // ◦ getrlimit(2)
 //  int getrlimit (int resource, struct rlimit *rlim);
 
-void test(void)
+void blockTest(void)
 {
-    printf("------Malloc TEST------\n");
+    printf("------Malloc BLOCK TEST------\n");
     printf("\n------Simple Malloc------\n");
     char *test = ft_malloc(sizeof(char) * 3);
     test[0] = 'o';
@@ -53,7 +53,7 @@ void test(void)
 
     printf("\n------Malloc in Free space to split block------\n");
     printf("------Malloc two chunks and free First------");
-    test = ft_malloc(sizeof(char) * 100);
+    test = ft_malloc(sizeof(char) * 96);
     test2 = ft_malloc(sizeof(char) * 10);
     ft_free(test);
     printStruct();
@@ -67,12 +67,14 @@ void test(void)
     printStruct();
 
     printf("\n------Bad adresses for free------\n");
+    printf("nothing malloc\n");
+    ft_free((void *)0x56);
+    test = ft_malloc(sizeof(char) * 40);
     printf("free(0x56)\n");
     ft_free((void *)0x56);
     printf("free(NULL)\n");
     ft_free(NULL);
     printf("free(test + 5)\n");
-    test = ft_malloc(sizeof(char) * 40);
     ft_free(test + 5);
     ft_free(test);
 }
@@ -82,7 +84,14 @@ void mallocThings(size_t size)
     char *onsenfou = ft_malloc(size);
 }
 
+void zoneTest()
+{
+    printf("\n\n------Malloc Zone TEST------\n");
+    printf("------Malloc one of each zone------\n");
+}
+
 int main(void)
 {
-    test();
+    blockTest();
+    zoneTest();
 }

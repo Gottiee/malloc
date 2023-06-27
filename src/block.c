@@ -67,8 +67,8 @@ t_block *extendHeapBlock(size_t size, t_heap *h)
 // looking for a free block
 t_block *findBlock(t_heap *h, size_t size)
 {
-	// t_block *b = (t_block *)h + HEAP_SIZE;
 	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
+
 	while (b && !(b->freed && b->data_size >= size))
 		b = b->next;
 	if (b && b->data_size > size + BLOCK_SIZE)
@@ -77,6 +77,8 @@ t_block *findBlock(t_heap *h, size_t size)
 	{
 		b->freed = false;
 		b->data_size = size;
+		h->free_size -= b->data_size + BLOCK_SIZE;
+		h->malloc_size += b->data_size + BLOCK_SIZE;
 	}
 	return b;
 }

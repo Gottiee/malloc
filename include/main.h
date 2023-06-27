@@ -73,6 +73,7 @@ void printStruct(void);
 /*--- free.c ---*/
 void ft_free(void *ptr);
 t_block *getBlock(void *ptr);
+t_heap *findHeapChunks(t_block *b);
 
 /*--- zones.c ---*/
 int determineType(size_t size);
@@ -84,5 +85,7 @@ t_block *extendHeapBlockFirst(size_t size, t_heap *h);
 /*--- block.c ---*/
 t_block *extendHeapBlock(size_t size, t_heap *h);
 t_block *findBlock(t_heap *h, size_t size);
+
+
 
 #endif

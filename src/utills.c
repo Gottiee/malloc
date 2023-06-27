@@ -19,12 +19,14 @@ char *fill(bool free, char status[4])
     return status;
 }
 
-void print(t_block *b, int *color)
+void print(t_block *b, int *color, int div)
 {
     char status[4];
-    char *color_tab[] = {ARRIERE_PLAN_JAUNE, ARRIERE_PLAN_BLEU, ARRIERE_PLAN_MAGENTA, ARRIERE_PLAN_CYAN};
+    char *color_tab[] = {ARRIERE_PLAN_JAUNE, ARRIERE_PLAN_BLEU, ARRIERE_PLAN_MAGENTA};
+    if (div == 0)
+        div = 2;
 
-    printf("%s", color_tab[*color % 4]);
+    printf("%s", color_tab[*color % 3]);
     (*color)++;
     while (b)
     {
@@ -35,7 +37,7 @@ void print(t_block *b, int *color)
         {
             printf(VERT "free: %s", status);
             printf(BLANC "|" VERT);
-            for (int i = 0; i < b->data_size / 10; i++)
+            for (int i = 0; i < b->data_size / div; i++)
                 printf(".");
             printf(BLANC);
         }
@@ -43,7 +45,7 @@ void print(t_block *b, int *color)
         {
             printf(ROUGE "free: %s", status);
             printf(BLANC "|" ROUGE);
-            for (int i = 0; i < b->data_size / 10; i++)
+            for (int i = 0; i < b->data_size / div; i++)
                 printf("#");
             printf(BLANC);
         }
@@ -60,22 +62,20 @@ void printStruct()
     size_t size = 0, free_size = 0, malloc_size = 0, chunks = 0;
 
     g = base;
-    printf(JAUNE "\n----------Print Struct:----------\n" RESET);
+    printf(JAUNE "\n---Print Struct:---\n" RESET);
     if (!base)
     {
-        printf("Heap unallocated\n");
+        printf(ROUGE "\nHeap unallocated\n" RESET);
         return;
     }
     for (int i = 0; i < 3; i++)
     {
         t_heap *h = g->zone[i];
         t_heap *tmp;
-        printf(VERT "ZONE : %s\n" RESET, phrase[i]);
+        if (h)
+            printf(VERT "ZONE : %s\n" RESET, phrase[i]);
         if (!h)
-        {
-            printf("\tZone unallocated\n\n");
             continue;
-        }
         tmp = h;
         while (tmp)
         {
@@ -89,7 +89,7 @@ void printStruct()
         printf("\t\tSize : %ld\n\t\tFree size: %ld\n\t\tMalloc size: %ld\n\t\tChunks: %ld\n", size, free_size, malloc_size, chunks);
         while (h)
         {
-            print((t_block *)((char *)h + HEAP_SIZE), &color);
+            print((t_block *)((char *)h + HEAP_SIZE), &color, i * 20);
             h = h->next;
         }
         printf("\n\n");

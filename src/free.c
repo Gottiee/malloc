@@ -127,11 +127,11 @@ void updateHeap(t_block *beforeFusion, t_block *b)
 void ft_free(void *ptr)
 {
     t_block *b;
-    t_block *beforeFusion;
+    t_block beforeFusion;
 
     if (!base)
     {
-        printf("FREE: No Malloc");
+        printf("FREE: No Malloc\n");
         return;
     }
     if (!ptr)
@@ -145,8 +145,8 @@ void ft_free(void *ptr)
         printf("FREE: invalid address\n");
         return;
     }
-    beforeFusion = b;
+    beforeFusion = *b;
     b = fusion(&b);
-    updateHeap(beforeFusion, b);
+    updateHeap(&beforeFusion, b);
     verifFree(b);
 }
