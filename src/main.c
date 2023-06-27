@@ -84,11 +84,5 @@ void mallocThings(size_t size)
 
 int main(void)
 {
-    // test();
-    char *test;
-    for (int i = 0; i < 203; i++)
-    {
-        mallocThings(2000);
-    }
-    printStruct();
+    test();
 }

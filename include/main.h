@@ -22,14 +22,12 @@
 #define MAGENTA "\033[35m"
 #define CYAN "\033[36m"
 #define BLANC "\033[37m"
-#define ARRIERE_PLAN_NOIR "\033[40m"
 #define ARRIERE_PLAN_ROUGE "\033[41m"
 #define ARRIERE_PLAN_VERT "\033[42m"
 #define ARRIERE_PLAN_JAUNE "\033[43m"
 #define ARRIERE_PLAN_BLEU "\033[44m"
 #define ARRIERE_PLAN_MAGENTA "\033[45m"
 #define ARRIERE_PLAN_CYAN "\033[46m"
-#define ARRIERE_PLAN_BLANC "\033[47m"
 #define RESET "\033[0m"
 
 // a BLOCK of the tinyest malloc malloc(1) = 32 (t_block) + 1;

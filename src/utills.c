@@ -22,20 +22,31 @@ char *fill(bool free, char status[4])
 void print(t_block *b, int *color)
 {
     char status[4];
-    char *color_tab[] = {ARRIERE_PLAN_VERT, ARRIERE_PLAN_JAUNE, ARRIERE_PLAN_BLEU, ARRIERE_PLAN_MAGENTA, ARRIERE_PLAN_CYAN, ARRIERE_PLAN_ROUGE};
+    char *color_tab[] = {ARRIERE_PLAN_JAUNE, ARRIERE_PLAN_BLEU, ARRIERE_PLAN_MAGENTA, ARRIERE_PLAN_CYAN};
 
-    printf("%s", color_tab[*color % 6]);
+    printf("%s", color_tab[*color % 4]);
     (*color)++;
     while (b)
     {
         fill(b->freed, status);
-        printf("|size: %ld, free: %s|", b->data_size, status);
+        printf("|size: %ld, ", b->data_size);
+
         if (b->freed)
+        {
+            printf(VERT "free: %s", status);
+            printf(BLANC "|" VERT);
             for (int i = 0; i < b->data_size / 10; i++)
                 printf(".");
+            printf(BLANC);
+        }
         else
+        {
+            printf(ROUGE "free: %s", status);
+            printf(BLANC "|" ROUGE);
             for (int i = 0; i < b->data_size / 10; i++)
                 printf("#");
+            printf(BLANC);
+        }
         b = b->next;
     }
     printf(RESET);
@@ -78,7 +89,7 @@ void printStruct()
         printf("\t\tSize : %ld\n\t\tFree size: %ld\n\t\tMalloc size: %ld\n\t\tChunks: %ld\n", size, free_size, malloc_size, chunks);
         while (h)
         {
-            print((t_block *)h + HEAP_SIZE, &color);
+            print((t_block *)((char *)h + HEAP_SIZE), &color);
             h = h->next;
         }
         printf("\n\n");

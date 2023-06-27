@@ -31,7 +31,8 @@ t_heap *firstMmap(size_t size)
 
 void initHeapData(t_heap *h, int blockType, size_t size, t_heap *last)
 {
-    t_block *b = (t_block *)h + HEAP_SIZE;
+    // t_block *b = (t_block *)h + HEAP_SIZE;
+	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
     size_t zone = getZone(blockType, size);
 
     h->next = NULL;

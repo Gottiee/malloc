@@ -20,7 +20,8 @@ t_block *extendHeapBlockFirst(size_t size, t_heap *h)
 {
 	if (!h)
 		return (NULL);
-	t_block *b = (t_block *)h + HEAP_SIZE;
+	// t_block *b = (t_block *)h + HEAP_SIZE;
+	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
 	long sizeUse;
 
 	sizeUse = (void *)b - (void *)h;
@@ -38,7 +39,8 @@ t_block *extendHeapBlockFirst(size_t size, t_heap *h)
 // no block free, new mmap
 t_block *extendHeapBlock(size_t size, t_heap *h)
 {
-	t_block *b = (t_block *)h + HEAP_SIZE;
+	// t_block *b = (t_block *)h + HEAP_SIZE;
+	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
 	t_block *last = NULL;
 	char *tmp;
 	long sizeUse;
@@ -65,7 +67,8 @@ t_block *extendHeapBlock(size_t size, t_heap *h)
 // looking for a free block
 t_block *findBlock(t_heap *h, size_t size)
 {
-	t_block *b = (t_block *)h + HEAP_SIZE;
+	// t_block *b = (t_block *)h + HEAP_SIZE;
+	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
 	while (b && !(b->freed && b->data_size >= size))
 		b = b->next;
 	if (b && b->data_size > size + BLOCK_SIZE)
