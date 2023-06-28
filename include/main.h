@@ -66,6 +66,7 @@ typedef struct s_group_heap
 
 /*--- malloc.c ---*/
 void *ft_malloc(size_t size);
+int alignData(int size);
 
 /*--- utils.c ---*/
 void printStruct(void);
@@ -74,6 +75,9 @@ void printStruct(void);
 void ft_free(void *ptr);
 t_block *getBlock(void *ptr);
 t_heap *findHeapChunks(t_block *b);
+bool verifyAddress(t_block *b);
+t_block *fusion(t_block **b);
+void updateHeap(t_block *beforeFusion, t_block *b);
 
 /*--- zones.c ---*/
 int determineType(size_t size);
@@ -85,7 +89,10 @@ t_block *extendHeapBlockFirst(size_t size, t_heap *h);
 /*--- block.c ---*/
 t_block *extendHeapBlock(size_t size, t_heap *h);
 t_block *findBlock(t_heap *h, size_t size);
+void splitBlock(t_block *b, size_t size);
 
+/*--- realloc.c ---*/
+void *ft_realloc(void *ptr, size_t size);
 
 
 #endif

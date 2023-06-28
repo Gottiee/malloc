@@ -147,6 +147,8 @@ void ft_free(void *ptr)
         printf("FREE: invalid address\n");
         return;
     }
+    if (b->freed == true)
+        return;
     beforeFusion = *b;
     b = fusion(&b);
     updateHeap(&beforeFusion, b);

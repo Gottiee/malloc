@@ -135,9 +135,65 @@ void zoneTest()
     printStruct();
 }
 
+void reallocTest(void)
+{
+    char *test;
+    char *non = "cool ! everything has been well copyed !";
+
+    printf("\n\n------Realloc TEST------\n");
+    printf("------cmd: realloc(NULL, 10) | malloc 10------\n");
+    test = ft_realloc(NULL, 10);
+    printStruct();
+    printf("------cmd: realloc((char *ptr), 0) | free ptr------\n");
+    ft_realloc(test, 0);
+    printStruct();
+    printf("------realloc same size------\n");
+    printf("------cmd: realloc((char *ptr), 100)------\n");
+    test = ft_realloc(NULL, 100);
+    printStruct();
+    test = ft_realloc(test, 100);
+    printStruct();
+    printf("------realloc smaller size------\n");
+    printf("------cmd: realloc((char *ptr), 40)------\n");
+    test = ft_realloc(test, 40);
+    printStruct();
+    printf("------realloc bigger size------\n");
+    printf("------cmd: realloc((char *ptr), 60)------\n");
+    test = ft_realloc(test, 60);
+    printStruct();
+    printf("------realloc bigger size other configuration------\n");
+    printf("------Free first------\n");
+    ft_free((test));
+    printStruct();
+    printf("------malloc(40)------\n");
+    test = ft_malloc(40);
+    printStruct();
+    printf("------cmd: realloc((char *ptr), 60)------\n");
+    test = ft_realloc(test, 60);
+    printStruct();
+    printf("------Free all------\n");
+    ft_free(test);
+    printStruct();
+    printf("------Persistant data transfer------\n");
+    printf("------malloc 40 and write text inside------\n");
+    test = ft_malloc(sizeof(char) * 40);
+    for (int i = 0; non[i]; i++)
+        test[i] = non[i];
+    printf("string = \"%s\"\n", test);
+    printStruct();
+    printf("------cmd: realloc((char *ptr), 60)------\n");
+    test = ft_realloc(test, 60);
+    printStruct();
+    printf("string after realloc(test, 60)= \"%s\"\n", test);
+    printf("------Free all------\n");
+    ft_free(test);
+    printStruct();
+}
+
 int main(void)
 {
     blockTest();
     zoneTest();
     freeTest();
+    reallocTest();
 }

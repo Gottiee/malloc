@@ -65,7 +65,7 @@ void printStruct()
     printf(JAUNE "\n---Print Struct:---\n" RESET);
     if (!base)
     {
-        printf(ROUGE "\nHeap unallocated\n" RESET);
+        printf(ROUGE "Heap unallocated\n" RESET);
         return;
     }
     for (int i = 0; i < 3; i++)
