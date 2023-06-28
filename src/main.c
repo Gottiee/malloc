@@ -10,10 +10,10 @@ void blockTest(void)
     test[2] = '\0';
     printStruct();
     ft_putstr_fd("Malloc(sizeof(char) * 3 & write ok inside : chaine de caratere: ", 1);
-    ft_putstr_fd(test,1);
-    ft_putstr_fd("\n",1);
+    ft_putstr_fd(test, 1);
+    ft_putstr_fd("\n", 1);
 
-    char *test2 = malloc(sizeof(int) * 10);
+    char *test2 = malloc(sizeof(char) * 10);
     char *test3 = malloc(sizeof(char) * 10);
     ft_putstr_fd("\n------Malloc 2 other Chunks------", 1);
     printStruct();
@@ -183,15 +183,15 @@ void reallocTest(void)
     for (int i = 0; non[i]; i++)
         test[i] = non[i];
     ft_putstr_fd("string =\"", 1);
-    ft_putstr_fd(test,1);
-    ft_putstr_fd("\"\n",1);
+    ft_putstr_fd(test, 1);
+    ft_putstr_fd("\"\n", 1);
     printStruct();
     ft_putstr_fd("------cmd: realloc((char *ptr), 60)------\n", 1);
     test = realloc(test, 60);
     printStruct();
     ft_putstr_fd("string after realloc(test, 60)= \"", 1);
-    ft_putstr_fd(test,1);
-    ft_putstr_fd("\"\n",1);
+    ft_putstr_fd(test, 1);
+    ft_putstr_fd("\"\n", 1);
     ft_putstr_fd("------Free all------\n", 1);
     free(test);
     printStruct();
