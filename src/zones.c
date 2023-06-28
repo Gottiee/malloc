@@ -76,7 +76,7 @@ t_heap *extendHeap(int blockType, size_t size, t_heap *last)
 
 int determineType(size_t size)
 {
-    if (size <= 100)
+    if (size <= 104)
         return TINY;
     if (size <= 2000)
         return SMALL;

@@ -85,6 +85,8 @@ void deleteChunks(t_heap *h)
 {
     if (!h->prev && !h->next)
         base->zone[h->type] = NULL;
+    else if (!h->prev)
+        base->zone[h->type] = h->next;
     if (h->prev)
         h->prev->next = h->next;
     if (h->next)

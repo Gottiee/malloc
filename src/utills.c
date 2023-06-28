@@ -77,6 +77,10 @@ void printStruct()
         if (!h)
             continue;
         tmp = h;
+        chunks = 0;
+        size =0;
+        free_size = 0;
+        malloc_size = 0;
         while (tmp)
         {
             size += tmp->size;

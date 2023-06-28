@@ -1,12 +1,5 @@
 #include "../include/main.h"
 
-// ◦ mmap(2)
-//  void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
-// ◦ munmap(2)
-// ◦ getpagesize(2 or 3 depending on OS)
-// ◦ getrlimit(2)
-//  int getrlimit (int resource, struct rlimit *rlim);
-
 void blockTest(void)
 {
     printf("------Malloc BLOCK TEST------\n");
@@ -65,6 +58,25 @@ void blockTest(void)
     printStruct();
     ft_free(test2);
     printStruct();
+}
+
+void mallocThings(size_t size, char **tab, int howMany)
+{
+    for (int i = 0; i < howMany; i++)
+        tab[i] = ft_malloc(size);
+    printStruct();
+}
+
+void freeThings(char **tab, int howMany)
+{
+    for (int i = 0; i < howMany; i++)
+        ft_free(tab[i]);
+}
+
+void freeTest()
+{
+
+    char *test;
 
     printf("\n------Bad adresses for free------\n");
     printf("nothing malloc\n");
@@ -79,19 +91,53 @@ void blockTest(void)
     ft_free(test);
 }
 
-void mallocThings(size_t size)
-{
-    char *onsenfou = ft_malloc(size);
-}
-
 void zoneTest()
 {
+    char *test, *test2, *test3;
+    char **tab;
+
     printf("\n\n------Malloc Zone TEST------\n");
     printf("------Malloc one of each zone------\n");
+    test = ft_malloc(sizeof(char) * 50);
+    test2 = ft_malloc(sizeof(char) * 500);
+    test3 = ft_malloc(sizeof(char) * 5000);
+    printStruct();
+    printf("\n------Free them------\n");
+    ft_free(test);
+    ft_free(test2);
+    ft_free(test3);
+    printStruct();
+    printf("\n------Malloc at least 100 in one chunks------\n");
+    printf("\n------120 Tiny of size 100 (heap align 104)------\n");
+    tab = ft_malloc(sizeof(char *) * 1000);
+    mallocThings(100, tab, 120);
+    printf("\n------malloc one more------\n");
+    test = ft_malloc(100);
+    printStruct();
+    printf("\n------Free them (only large should remain (tab ptr))------\n");
+    freeThings(tab, 120);
+    ft_free(test);
+    printStruct();
+    printf("\n------100 SMALL of size 2000------\n");
+    mallocThings(2000, tab, 100);
+    printf("\n------malloc one more------\n");
+    test = ft_malloc(2000);
+    printStruct();
+    printf("\n------Free all------\n");
+    freeThings(tab, 100);
+    ft_free(test);
+    printStruct();
+    printf("\n------100 LARGE of size 5000------\n");
+    mallocThings(5000, tab, 100);
+    printf("\n------Free all------\n");
+    freeThings(tab, 100);
+    ft_free(tab);
+    printStruct();
 }
 
 int main(void)
 {
     blockTest();
     zoneTest();
+    freeTest();
 }
