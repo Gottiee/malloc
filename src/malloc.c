@@ -1,4 +1,4 @@
-#include "../include/main.h"
+#include "../include/malloc.h"
 
 t_group_heap *base = NULL;
 
@@ -25,16 +25,16 @@ static rlim_t get_system_limit(void)
 
 void doExtendHeap(t_heap **h, int blockType, size_t size, t_heap **last, t_block **b)
 {
-       *h = extendHeap(blockType, size, *last);
-       *b = extendHeapBlockFirst(size, *h);
+    *h = extendHeap(blockType, size, *last);
+    *b = extendHeapBlockFirst(size, *h);
 }
 
-void *ft_malloc(size_t size)
+void *malloc(size_t size)
 {
-    t_heap          *h;
-    t_block         *b = NULL;
-    t_heap          *last = NULL;
-    int             blockType;
+    t_heap *h;
+    t_block *b = NULL;
+    t_heap *last = NULL;
+    int blockType;
 
     if (size < 1)
         return (NULL);
@@ -42,7 +42,7 @@ void *ft_malloc(size_t size)
     blockType = determineType(size);
     if (getZone(blockType, size) + HEAP_SIZE + GROUP_SIZE > get_system_limit())
         return NULL;
-    if (!base) 
+    if (!base)
         doExtendHeap(&h, blockType, size, &last, &b);
     else
     {
@@ -61,5 +61,4 @@ void *ft_malloc(size_t size)
         }
     }
     return BLOCK_SHIFT(b);
-    
 }

@@ -4,7 +4,6 @@
 #include <sys/mman.h>
 #include <sys/resource.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <unistd.h>
 
 #define GROUP_SHIFT(start) ((void *)start + sizeof(t_group_heap))
@@ -65,14 +64,17 @@ typedef struct s_group_heap
 } t_group_heap;
 
 /*--- malloc.c ---*/
-void *ft_malloc(size_t size);
+void *malloc(size_t size);
 int alignData(int size);
 
 /*--- utils.c ---*/
 void printStruct(void);
+void ft_putnbr_fd(int n, int fd);
+void ft_putstr_fd(char *s, int fd);
+void ft_putlong_fd(long int n, int fd);
 
 /*--- free.c ---*/
-void ft_free(void *ptr);
+void free(void *ptr);
 t_block *getBlock(void *ptr);
 t_heap *findHeapChunks(t_block *b);
 bool verifyAddress(t_block *b);
@@ -92,7 +94,6 @@ t_block *findBlock(t_heap *h, size_t size);
 void splitBlock(t_block *b, size_t size);
 
 /*--- realloc.c ---*/
-void *ft_realloc(void *ptr, size_t size);
-
+void *realloc(void *ptr, size_t size);
 
 #endif

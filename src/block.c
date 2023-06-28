@@ -1,4 +1,4 @@
-#include "../include/main.h"
+#include "../include/malloc.h"
 
 // A block is free, but data is too short to fill the entire block, we split it
 void splitBlock(t_block *b, size_t size)
@@ -20,12 +20,10 @@ t_block *extendHeapBlockFirst(size_t size, t_heap *h)
 {
 	if (!h)
 		return (NULL);
-	// t_block *b = (t_block *)h + HEAP_SIZE;
 	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
 	long sizeUse;
 
 	sizeUse = (void *)b - (void *)h;
-	// printf("value of sizeUse = %ld\n", sizeUse);
 	if (h && h->type != LARGE)
 		if (sizeUse + size + BLOCK_SIZE > h->size)
 			return NULL;
@@ -39,7 +37,6 @@ t_block *extendHeapBlockFirst(size_t size, t_heap *h)
 // no block free, new mmap
 t_block *extendHeapBlock(size_t size, t_heap *h)
 {
-	// t_block *b = (t_block *)h + HEAP_SIZE;
 	t_block *b = (t_block *)((char *)h + HEAP_SIZE);
 	t_block *last = NULL;
 	char *tmp;

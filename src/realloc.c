@@ -1,4 +1,4 @@
-#include "../include/main.h"
+#include "../include/malloc.h"
 
 void increaseHeap(t_block *b, size_t size)
 {
@@ -38,7 +38,7 @@ void updateHeapRea(t_block *beforeFusion, t_block *b)
 	h->malloc_size += b->data_size - beforeFusion->data_size;
 }
 
-void *ft_realloc(void *ptr, size_t size)
+void *realloc(void *ptr, size_t size)
 {
 	t_block *b;
 	t_block beforeFusion;
@@ -46,10 +46,10 @@ void *ft_realloc(void *ptr, size_t size)
 	t_block *new;
 
 	if (!ptr)
-		return (ft_malloc(size));
+		return (malloc(size));
 	if (size == 0)
 	{
-		ft_free(ptr);
+		free(ptr);
 		return NULL;
 	}
 	b = getBlock(ptr);
@@ -69,8 +69,6 @@ void *ft_realloc(void *ptr, size_t size)
 		beforeFusion = *b;
 		fusion(&b);
 		updateHeapRea(&beforeFusion, b);
-		// printf("after fusion");
-		// printStruct();
 		if (b->data_size >= size)
 		{
 			if (b && b->data_size > size + BLOCK_SIZE)
@@ -80,14 +78,12 @@ void *ft_realloc(void *ptr, size_t size)
 			}
 			return BLOCK_SHIFT(b);
 		}
-		newPtr = ft_malloc(size);
-		// printf("after malloc");
-		// printStruct();
+		newPtr = malloc(size);
 		if (!newPtr)
 			return NULL;
 		new = getBlock(newPtr);
 		copyBlock(b, new);
-		ft_free(ptr);
+		free(ptr);
 		b = new;
 	}
 	return BLOCK_SHIFT(b);

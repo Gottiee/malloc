@@ -1,4 +1,4 @@
-#include "../include/main.h"
+#include "../include/malloc.h"
 
 char *fill(bool free, char status[4])
 {
@@ -21,37 +21,42 @@ char *fill(bool free, char status[4])
 
 void print(t_block *b, int *color, int div)
 {
+    ft_putstr_fd("", 1);
+
     char status[4];
     char *color_tab[] = {ARRIERE_PLAN_JAUNE, ARRIERE_PLAN_BLEU, ARRIERE_PLAN_MAGENTA};
     if (div == 0)
         div = 2;
 
-    printf("%s", color_tab[*color % 3]);
+    ft_putstr_fd(color_tab[*color % 3], 1);
     (*color)++;
     while (b)
     {
         fill(b->freed, status);
-        printf("|size: %ld, ", b->data_size);
-
+        ft_putstr_fd("|size: ", 1);
+        ft_putlong_fd(b->data_size, 1);
+        ft_putstr_fd(", ", 1);
         if (b->freed)
         {
-            printf(VERT "free: %s", status);
-            printf(BLANC "|" VERT);
+            ft_putstr_fd(VERT "free: ", 1);
+            ft_putstr_fd("status", 1);
+            ft_putstr_fd(BLANC "|" VERT, 1);
             for (int i = 0; i < b->data_size / div; i++)
-                printf(".");
-            printf(BLANC);
+                ft_putstr_fd(".", 1);
+            ft_putstr_fd(BLANC, 1);
         }
         else
         {
-            printf(ROUGE "free: %s", status);
-            printf(BLANC "|" ROUGE);
+            ft_putstr_fd(ROUGE "free: ", 1);
+            ft_putstr_fd("status", 1);
+            ft_putstr_fd(BLANC "|" ROUGE, 1);
             for (int i = 0; i < b->data_size / div; i++)
-                printf("#");
-            printf(BLANC);
+                ft_putstr_fd("#", 1);
+            ft_putstr_fd(BLANC, 1);
         }
         b = b->next;
     }
-    printf(RESET);
+    ft_putstr_fd(RESET, 1);
 }
 
 void printStruct()
@@ -62,10 +67,10 @@ void printStruct()
     size_t size = 0, free_size = 0, malloc_size = 0, chunks = 0;
 
     g = base;
-    printf(JAUNE "\n---Print Struct:---\n" RESET);
+    ft_putstr_fd(JAUNE "\n---Print Struct:---\n" RESET, 1);
     if (!base)
     {
-        printf(ROUGE "Heap unallocated\n" RESET);
+        ft_putstr_fd(ROUGE "Heap unallocated\n" RESET, 1);
         return;
     }
     for (int i = 0; i < 3; i++)
@@ -73,12 +78,16 @@ void printStruct()
         t_heap *h = g->zone[i];
         t_heap *tmp;
         if (h)
-            printf(VERT "ZONE : %s\n" RESET, phrase[i]);
+        {
+            ft_putstr_fd(VERT "ZONE : ", 1);
+            ft_putstr_fd(phrase[i], 1);
+            ft_putstr_fd("\n" RESET, 1);
+        }
         if (!h)
             continue;
         tmp = h;
         chunks = 0;
-        size =0;
+        size = 0;
         free_size = 0;
         malloc_size = 0;
         while (tmp)
@@ -89,13 +98,21 @@ void printStruct()
             tmp = tmp->next;
             chunks++;
         }
-        printf("\tDATA:\n");
-        printf("\t\tSize : %ld\n\t\tFree size: %ld\n\t\tMalloc size: %ld\n\t\tChunks: %ld\n", size, free_size, malloc_size, chunks);
+        ft_putstr_fd("\tDATA:\n", 1);
+        ft_putstr_fd("\t\tSize : ", 1);
+        ft_putlong_fd(size, 1);
+        ft_putstr_fd("\n\t\tFree size: ", 1);
+        ft_putlong_fd(free_size, 1);
+        ft_putstr_fd("\n\t\tMalloc size: ", 1);
+        ft_putlong_fd(malloc_size, 1);
+        ft_putstr_fd("\n\t\tChunks: ", 1);
+        ft_putlong_fd(chunks, 1);
+        ft_putstr_fd("\n", 1);
         while (h)
         {
             print((t_block *)((char *)h + HEAP_SIZE), &color, i * 20);
             h = h->next;
         }
-        printf("\n\n");
+        ft_putstr_fd("\n\n", 1);
     }
 }

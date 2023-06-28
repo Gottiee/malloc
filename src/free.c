@@ -1,4 +1,4 @@
-#include "../include/main.h"
+#include "../include/malloc.h"
 
 // Look for prev and next block, if their are free, merge them to be anunique block
 t_block *fusion(t_block **b)
@@ -126,25 +126,25 @@ void updateHeap(t_block *beforeFusion, t_block *b)
     h->malloc_size -= beforeFusion->data_size + BLOCK_SIZE;
 }
 
-void ft_free(void *ptr)
+void free(void *ptr)
 {
     t_block *b;
     t_block beforeFusion;
 
     if (!base)
     {
-        printf("FREE: No Malloc\n");
+        ft_putstr_fd("FREE: No Malloc\n", 2);
         return;
     }
     if (!ptr)
     {
-        printf("FREE: NULL ptr\n");
+        ft_putstr_fd("FREE: NULL ptr\n", 2);
         return;
     }
     b = getBlock(ptr);
     if (!verifyAddress(b))
     {
-        printf("FREE: invalid address\n");
+        ft_putstr_fd("FREE: invalid address\n", 2);
         return;
     }
     if (b->freed == true)
