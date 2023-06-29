@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 void ft_putchar_fd(char c, int fd)
 {
@@ -7,10 +7,10 @@ void ft_putchar_fd(char c, int fd)
 
 void ft_puthex(unsigned long int n)
 {
-    char *hex = "0123456789ABCDEF";
-    if (n >= 16)
-        ft_puthex(n / 16);
-    ft_putchar_fd(hex[n % 16], 1);
+	char *hex = "0123456789ABCDEF";
+	if (n >= 16)
+		ft_puthex(n / 16);
+	ft_putchar_fd(hex[n % 16], 1);
 }
 
 size_t ft_strlen(const char *str)

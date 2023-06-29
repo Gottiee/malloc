@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 // Look for prev and next block, if their are free, merge them to be anunique block
 t_block *fusion(t_block **b)
@@ -108,7 +108,6 @@ t_heap *findHeapChunks(t_block *b)
 void verifFree(t_block *b)
 {
     t_heap *h;
-    t_heap *prev;
 
     h = findHeapChunks(b);
     if (h->malloc_size == 0)

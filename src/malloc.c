@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 t_group_heap *base = NULL;
 

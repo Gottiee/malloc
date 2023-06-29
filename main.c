@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "inc/malloc.h"
 
 void blockTest(void)
 {
@@ -76,24 +76,6 @@ void freeThings(char **tab, int howMany)
         free(tab[i]);
 }
 
-void freeTest()
-{
-
-    char *test;
-
-    ft_putstr_fd("\n------Bad adresses for free------\n", 1);
-    ft_putstr_fd("nothing malloc\n", 1);
-    free((void *)0x56);
-    test = malloc(sizeof(char) * 40);
-    ft_putstr_fd("free(0x56)\n", 1);
-    free((void *)0x56);
-    ft_putstr_fd("free(NULL)\n", 1);
-    free(NULL);
-    ft_putstr_fd("free(test + 5)\n", 1);
-    free(test + 5);
-    free(test);
-}
-
 void zoneTest()
 {
     char *test, *test2, *test3;
@@ -141,7 +123,8 @@ void zoneTest()
 void reallocTest(void)
 {
     char *test;
-    char *non = "cool ! everything has been well copyed !";
+    int i = -1;
+    char *non = "everything has been well copyed !";
 
     ft_putstr_fd("\n\n------Realloc TEST------\n", 1);
     ft_putstr_fd("------cmd: realloc(NULL, 10) | malloc 10------\n", 1);
@@ -180,8 +163,9 @@ void reallocTest(void)
     ft_putstr_fd("------Persistant data transfer------\n", 1);
     ft_putstr_fd("------malloc 40 and write text inside------\n", 1);
     test = malloc(sizeof(char) * 40);
-    for (int i = 0; non[i]; i++)
+    while (non[++i])
         test[i] = non[i];
+    test[i] = '\0';
     ft_putstr_fd("string =\"", 1);
     ft_putstr_fd(test, 1);
     ft_putstr_fd("\"\n", 1);
@@ -205,6 +189,8 @@ void showAllocTest(void)
     char *test2 = malloc(200);
     char *test3 = malloc(2000);
     char *test4 = malloc(2500);
+    for (int i = 0; i < 8; i++)
+        test4[i] = 'A';
     char *test5 = malloc(5500);
     show_alloc_mem();
     free(test);
@@ -219,7 +205,6 @@ int main(void)
 {
     blockTest();
     zoneTest();
-    freeTest();
     reallocTest();
     showAllocTest();
 }

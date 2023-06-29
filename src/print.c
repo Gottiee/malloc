@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 char *fill(bool free, char status[4])
 {
@@ -41,7 +41,7 @@ void print(t_block *b, int *color, int div)
             ft_putstr_fd(VERT "free: ", 1);
             ft_putstr_fd("status", 1);
             ft_putstr_fd(BLANC "|" VERT, 1);
-            for (int i = 0; i < b->data_size / div; i++)
+            for (size_t i = 0; i < b->data_size / div; i++)
                 ft_putstr_fd(".", 1);
             ft_putstr_fd(BLANC, 1);
         }
@@ -50,7 +50,7 @@ void print(t_block *b, int *color, int div)
             ft_putstr_fd(ROUGE "free: ", 1);
             ft_putstr_fd("status", 1);
             ft_putstr_fd(BLANC "|" ROUGE, 1);
-            for (int i = 0; i < b->data_size / div; i++)
+            for (size_t i = 0; i < b->data_size / div; i++)
                 ft_putstr_fd("#", 1);
             ft_putstr_fd(BLANC, 1);
         }

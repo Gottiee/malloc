@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 // A block is free, but data is too short to fill the entire block, we split it
 void splitBlock(t_block *b, size_t size)

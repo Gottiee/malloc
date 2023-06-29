@@ -1,13 +1,13 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 void printData(t_block *b, size_t *size)
 {
 	while (b)
 	{
 		ft_putstr_fd("Ox", 1);
-		ft_puthex((unsigned long int)(void *)b);
+		ft_puthex((unsigned long int)b);
 		ft_putstr_fd(" = 0x", 1);
-		ft_puthex((unsigned long int)(void *)BLOCK_SHIFT(b));
+		ft_puthex((unsigned long int)BLOCK_SHIFT(b));
 		ft_putstr_fd(" : ", 1);
 		ft_putlong_fd(b->data_size, 1);
 		*size += b->data_size;
@@ -31,12 +31,11 @@ void show_alloc_mem()
 	for (int i = 0; i < 3; i++)
 	{
 		t_heap *h = g->zone[i];
-		t_heap *tmp;
 		if (h)
 		{
 			ft_putstr_fd(phrase[i], 1);
 			ft_putstr_fd(" : Ox", 1);
-			ft_puthex((unsigned long int)(void *)h);
+			ft_puthex((unsigned long int)h);
 			ft_putstr_fd("\n", 1);
 		}
 		if (!h)

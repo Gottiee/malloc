@@ -1,4 +1,4 @@
-#include "../include/malloc.h"
+#include "../inc/malloc.h"
 
 void increaseHeap(t_block *b, size_t size)
 {
