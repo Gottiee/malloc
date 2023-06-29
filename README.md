@@ -31,6 +31,10 @@ Despite this, it offers a solid foundation on which to rely to fully understand 
 
 ## Third Step : Add zone
 
+Zone shema:
+
+![Zone Shema](./img/zone.png)
+
 As mentionned in the subject : 
 >Each zone must contain at least 100 allocations.
 
