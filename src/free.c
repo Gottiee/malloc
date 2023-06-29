@@ -101,7 +101,6 @@ t_heap *findHeapChunks(t_block *b)
 
     while (b->prev)
         b = b->prev;
-    // h = (t_heap *)b - HEAP_SIZE;
     h = (t_heap *)((char *)b - HEAP_SIZE);
     return h;
 }

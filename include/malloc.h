@@ -68,10 +68,11 @@ void *malloc(size_t size);
 int alignData(int size);
 
 /*--- utils.c ---*/
-void printStruct(void);
+void show_alloc_mem_ex(void);
 void ft_putnbr_fd(int n, int fd);
 void ft_putstr_fd(char *s, int fd);
 void ft_putlong_fd(long int n, int fd);
+void ft_puthex(unsigned long int n);
 
 /*--- free.c ---*/
 void free(void *ptr);
@@ -95,5 +96,8 @@ void splitBlock(t_block *b, size_t size);
 
 /*--- realloc.c ---*/
 void *realloc(void *ptr, size_t size);
+
+/*--- show_alloc_mem.c ---*/
+void show_alloc_mem();
 
 #endif

@@ -59,7 +59,7 @@ void print(t_block *b, int *color, int div)
     ft_putstr_fd(RESET, 1);
 }
 
-void printStruct()
+void show_alloc_mem_ex()
 {
     t_group_heap *g;
     char *phrase[] = {"TINY", "SMALL", "LARGE"};
